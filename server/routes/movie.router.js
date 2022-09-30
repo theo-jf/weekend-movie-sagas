@@ -16,6 +16,31 @@ router.get('/', (req, res) => {
 
 });
 
+// GET route for a specific movie's details
+router.get('/:id', (req, res) => {
+
+  const getId = req.params.id;
+  const sqlText = `SELECT
+                      movies.title, movies.poster, movies.description, 
+                      ARRAY_AGG (genres.name) genres
+                   FROM "movies"
+                      JOIN "movies_genres"
+                        ON movies.id = movies_genres.movie_id
+                      JOIN "genres"
+                        ON movies_genres.genre_id = genres.id
+                      WHERE movies.id = $1
+                      GROUP BY movies.title, movies.poster, movies.description;`
+  
+  pool.query(sqlText, [getId])
+    .then(result => {
+      res.send(result.rows[0]);
+    })
+    .catch(error => {
+      console.log('Error in /api/movies/:id GET', error);
+    })
+
+})
+
 router.post('/', (req, res) => {
   console.log(req.body);
   // RETURNING "id" will give us back the id of the created movie
