@@ -7,6 +7,7 @@ export default function MovieDetailsItem({movie}) {
                 alt={movie.title}
             />
             <p>{movie.description}</p>
+            {/* Conditional rendering based on # of genres */}
             <p>{(movie?.genres?.length > 1) ? 'Genres' : 'Genre'}</p>
             {movie?.genres?.map((genre, i) => {
                 return (

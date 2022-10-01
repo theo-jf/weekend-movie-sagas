@@ -6,20 +6,21 @@ import MovieDetailsItem from "./MovieDetailsItem";
 
 export default function MovieDetails() {
 
-    // FIX RENDERING BUG!!!!!
-
     const dispatch = useDispatch();
     const params = useParams();
     const history = useHistory();
     const movie = useSelector(store => store.details);
 
+    // On page load . . . 
     useEffect(() => {
-
+        
+        // Fetch the movie details associated with the id in params
         dispatch({
             type: 'SAGA_FETCH_DETAILS',
             payload: params.id
         });
 
+        // Clear the details store upon leaving the page
         return () => {
             dispatch({type: 'CLEAR_DETAILS'});
         }
