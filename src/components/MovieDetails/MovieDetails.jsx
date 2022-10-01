@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import MovieDetailsItem from "./MovieDetailsItem";
+
 export default function MovieDetails() {
 
     // FIX RENDERING BUG!!!!!
@@ -22,21 +24,9 @@ export default function MovieDetails() {
             dispatch({type: 'CLEAR_DETAILS'});
         }
 
-    }, [params.id])
+    }, [params.id]);
 
     return (
-        <div key={movie.id} >
-        <h3>{movie.title}</h3>
-        <img className="detailsPoster" 
-            src={movie.poster} 
-            alt={movie.title}
-        />
-        <p>{(genres.length > 1) ? 'Genres' : 'Genre'}</p>
-        {movie.genres.map(genre => {
-            return (
-                <p>{genre}</p>
-            );
-        })}
-        </div>
+        <MovieDetailsItem key={movie.id} movie={movie} />
     );
 }
