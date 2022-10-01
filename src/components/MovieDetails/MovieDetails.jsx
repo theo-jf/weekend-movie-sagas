@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,8 +10,8 @@ export default function MovieDetails() {
 
     const dispatch = useDispatch();
     const params = useParams();
+    const history = useHistory();
     const movie = useSelector(store => store.details);
-    const genres = movie.genres
 
     useEffect(() => {
 
@@ -26,7 +26,14 @@ export default function MovieDetails() {
 
     }, [params.id]);
 
+    const backToList = () => {
+        history.push('/');
+    }
+
     return (
-        <MovieDetailsItem key={movie.id} movie={movie} />
+        <>
+            <button id="backToList" onClick={backToList}>Back to List</button>
+            <MovieDetailsItem key={movie.id} movie={movie} />
+        </>
     );
 }
