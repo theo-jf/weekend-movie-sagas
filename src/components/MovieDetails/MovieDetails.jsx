@@ -34,7 +34,7 @@ export default function MovieDetails() {
     return (
         <>
             <MovieDetailsItem key={movie.id} movie={movie} />
-            <footer className="addMovieFooter">
+            <footer className="movieFooter">
                 <button id="backToList" onClick={backToList}>Back to List</button>
             </footer>
         </>

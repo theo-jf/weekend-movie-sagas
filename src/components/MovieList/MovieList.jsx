@@ -42,7 +42,7 @@ function MovieList() {
                     })}
                 </section>
             </main>
-            <footer className="addMovieFooter">
+            <footer className="movieFooter">
                 <button onClick={toMovieForm}>Add a Movie</button>
             </footer>
         </>
