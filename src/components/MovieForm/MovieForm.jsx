@@ -2,7 +2,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { TextField, FormControl } from "@mui/material";
+import { TextField, Box, MenuItem, Select, InputLabel } from "@mui/material";
 
 export default function MovieForm() {
 
@@ -16,7 +16,16 @@ export default function MovieForm() {
     const [badGenreSubmit, setBadGenreSubmit] = useState(false);
     const [badDescSubmit, setBadDescSubmit] = useState(false);
 
-    const [newMovieObject, setNewMovieObject] = useState({});
+    const [newMovieObject, setNewMovieObject] = useState({
+                                                    title: '',
+                                                    poster: '',
+                                                    description: '',
+                                                    genre_ids: [],
+                                                    genre_names: []
+                                                });
+
+    const [newMovieObjectGenreIds, setNewMovieObjectGenreIds] = useState([]);
+    const [newMovieObjectGenreNames, setNewMovieObjectGenreNames] = useState([]);
 
 
     useEffect(() => {
@@ -25,6 +34,19 @@ export default function MovieForm() {
 
     const backToList = () => {
         history.push('/');
+    }
+
+    const addNewMovie = () => {
+        console.log(newMovieObject);
+        backToList();
+    }
+
+    const addGenre = (e) => {
+        if (!newMovieObjectGenreNames.includes(e.target.value.name)) {
+            setNewMovieObjectGenreIds(prevState => [...prevState, e.target.value.id]);
+            setNewMovieObjectGenreNames(prevState => [...prevState, e.target.value.name]);
+            console.log(newMovieObjectGenreNames);
+        }
     }
 
     return (
@@ -38,30 +60,51 @@ export default function MovieForm() {
              }}
              noValidate>
             <div>
-                <TextField onChange={(e) => setNewMovieObject({title: e.target.value})}
-                        error={(badTitleSubmit === true) ? true : false}
-                        required={(badTitleSubmit === true) ? true : false}
-                        value={newMovieObject.title}
-                        placeholder="title"
-                        variant="standard"
-                        fullWidth
-                        helperText={(badTitleSubmit === true) ? "required" : null}/>
-                <TextField onChange={(e) => setNewMovieObject({poster: e.target.value})}
-                        error={(badPosterSubmit === true) ? true : false}
-                        required={(badPosterSubmit === true) ? true : false}
-                        value={newMovieObject.poster}
-                        placeholder="link to poster"
-                        variant="standard"
-                        fullWidth
-                        helperText={(badPosterSubmit === true) ? "required" : ""}/>
-                <TextField onChange={(e) => setNewMovieObject({description: e.target.value})}
-                        error={(badDescSubmit === true) ? true : false}
-                        required={(badDescSubmit === true) ? true : false}
-                        value={newMovieObject.description}
-                        placeholder="description"
-                        variant="standard"
-                        fullWidth
-                        helperText={(badDescSubmit === true) ? "required" : ""}/>
+                <TextField 
+                    onChange={(e) => setNewMovieObject(prevState => ({...prevState, title: e.target.value}))}
+                    error={(badTitleSubmit === true) ? true : false}
+                    required={(badTitleSubmit === true) ? true : false}
+                    value={newMovieObject.title}
+                    placeholder="title"
+                    variant="standard"
+                    fullWidth
+                    helperText={(badTitleSubmit === true) ? "required" : null}/>
+                <TextField 
+                    onChange={(e) => setNewMovieObject(prevState => ({...prevState, poster: e.target.value}))}
+                    error={(badPosterSubmit === true) ? true : false}
+                    required={(badPosterSubmit === true) ? true : false}
+                    value={newMovieObject.poster}
+                    placeholder="link to poster"
+                    variant="standard"
+                    fullWidth
+                    helperText={(badPosterSubmit === true) ? "required" : ""}/>
+                <TextField 
+                    onChange={(e) => setNewMovieObject(prevState => ({...prevState, description: e.target.value}))}
+                    error={(badDescSubmit === true) ? true : false}
+                    required={(badDescSubmit === true) ? true : false}
+                    value={newMovieObject.description}
+                    placeholder="description"
+                    variant="standard"
+                    fullWidth
+                    helperText={(badDescSubmit === true) ? "required" : ""}/>
+                {/* Display for added genres (if any) */}
+                {newMovieObjectGenreNames.map((name, i) => {
+                    return (
+                        <p key={i}>{name}</p>
+                    );
+                })}
+                {/* Drop-down to add another genre */}
+                <InputLabel>Add genres</InputLabel>
+                <Select
+                value={''}
+                onChange={addGenre}
+                >
+                    {genres?.map(genre => {
+                        return (
+                            <MenuItem key={genre?.id} value={{id: genre?.id, name: genre?.name}}>{genre?.name}</MenuItem>
+                        );
+                    })}
+                </Select>
             </div>
                 {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
@@ -71,7 +114,7 @@ export default function MovieForm() {
             </Box>
             <footer className="movieFooter">
                 <button id="cancelFormBtn" onClick={backToList}>Cancel</button>
-                <button id="saveFormBtn" onClick={backToList}>Save</button>
+                <button id="saveFormBtn" onClick={addNewMovie}>Save</button>
             </footer>
         </>
     );
