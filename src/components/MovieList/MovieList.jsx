@@ -19,25 +19,33 @@ function MovieList() {
         history.push(`/details/${id}`);
     }
 
-    return (
-        <main>
-            <h1>MovieList</h1>
-            <section className="movies">
-                {movies.map(movie => {
-                    return (
-                        <div key={movie.id} >
-                            <h3>{movie.title}</h3>
-                            <img className="poster" 
-                                src={movie.poster} 
-                                alt={movie.title}
-                                onClick={() => seeDetails(movie.id)}
-                            />
-                        </div>
-                    );
-                })}
-            </section>
-        </main>
+    const toMovieForm = () => {
+        history.push('/addmovie');
+    }
 
+    return (
+        <>
+            <main>
+                <h1>MovieList</h1>
+                <section className="movies">
+                    {movies.map(movie => {
+                        return (
+                            <div key={movie.id} >
+                                <h3>{movie.title}</h3>
+                                <img className="poster" 
+                                    src={movie.poster} 
+                                    alt={movie.title}
+                                    onClick={() => seeDetails(movie.id)}
+                                />
+                            </div>
+                        );
+                    })}
+                </section>
+            </main>
+            <footer className="addMovieFooter">
+                <button onClick={toMovieForm}>Add a Movie</button>
+            </footer>
+        </>
     );
 }
 

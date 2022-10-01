@@ -6,3 +6,15 @@
 .poster:hover {
     cursor: pointer;
 }
+
+.addMovieFooter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: cadetblue;
+}
