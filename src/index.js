@@ -15,6 +15,8 @@ import axios from 'axios';
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('SAGA_FETCH_DETAILS', fetchDetails);
+    yield takeEvery('SAGA_FETCH_GENRES', fetchAllGenres);
+    yield takeEvery('SAGA_POST_MOVIE', postNewMovie);
 }
 
 function* fetchAllMovies() {
@@ -43,6 +45,36 @@ function* fetchDetails(action) {
     } catch (error) {
         console.log(error);
         alert('Error loading details');
+    }
+}
+
+function* fetchAllGenres() {
+    try {
+        const allGenres = yield axios.get('/api/genre');
+        yield put ({
+            type: 'SET_GENRES',
+            payload: allGenres.data
+        })
+    } catch (error) {
+        console.log(error);
+        alert('Error fetching genres')
+    }
+}
+
+function* postNewMovie(action) {
+    try { 
+        yield axios.post('/api/movie', action.payload);
+        yield put({
+            type: 'FETCH_MOVIES'
+        })
+        yield put ({
+            type: 'POST_MOVIE_SUCCESS'
+        })
+    } catch (error) {
+        console.log(error);
+        yield put ({
+            type: 'POST_MOVIE_ERROR'
+        })
     }
 }
 
@@ -80,12 +112,26 @@ const details = (state = {}, action) => {
     return state;
 }
 
+// Boolean for snackbar appearance
+const snackbar = (state = {success: false, error: false}, action) => {
+    switch (action.type) {
+        case 'POST_MOVIE_SUCCESS':
+            return {...state, success: true};
+        case 'POST_MOVIE_ERROR':
+            return {... state, error: true};
+        case 'RESET_SNACKBAR':
+            return {success: false, error: false};
+    }  
+    return state;
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
-        details
+        details,
+        snackbar
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

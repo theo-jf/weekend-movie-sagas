@@ -33,8 +33,10 @@ export default function MovieDetails() {
 
     return (
         <>
-            <button id="backToList" onClick={backToList}>Back to List</button>
             <MovieDetailsItem key={movie.id} movie={movie} />
+            <footer className="movieFooter">
+                <button id="backToList" onClick={backToList}>Back to List</button>
+            </footer>
         </>
     );
 }

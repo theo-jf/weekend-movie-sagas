@@ -6,3 +6,20 @@
 .poster:hover {
     cursor: pointer;
 }
+
+.movieListMain {
+    margin-bottom: 70px;
+    text-align: center;
+}
+
+.movieFooter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: cadetblue;
+}
