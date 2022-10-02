@@ -75,6 +75,11 @@ export default function EditMovieDetailsItem({movie}) {
                     type: 'SAGA_PUT_MOVIE',
                     payload: newMovieObject
                 })
+                // Dispatch here to fix id loss bug
+                dispatch({
+                    type: 'SAGA_FETCH_DETAILS',
+                    payload: newMovieObject.id
+                })
                 console.log('New movie', newMovieObject);
                 backToDetails();
         }

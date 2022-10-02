@@ -88,16 +88,16 @@ router.put('/:id', (req, res) => {
   const updateId = req.params.id;
   const sqlTextMovies = `UPDATE "movies"
                       SET 
-                        movies.title = $1, 
-                        movies.poster = $2, 
-                        movies.description = $3
-                      WHERE movies.id = $1;`
+                        "title" = $1, 
+                        "poster" = $2, 
+                        "description" = $3
+                      WHERE "id" = $4;`
                     
   pool.query(sqlTextMovies, [req.body.title, req.body.poster, req.body.description, updateId])
     .then(result => {
       // On successful update, delete old genres from join table
       const sqlTextJoinTableDelete = `DELETE FROM "movies_genres"
-                                  WHERE movie_id = $1`
+                                  WHERE "movie_id" = $1`
       pool.query(sqlTextJoinTableDelete, [updateId])
         .then(result => {
           // Then, add new genres

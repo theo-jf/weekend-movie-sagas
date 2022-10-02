@@ -83,12 +83,17 @@ function* postNewMovie(action) {
 }
 
 function* updateMovie(action) {
+    const updateId = action.payload.id;
     try {
-
+        yield axios.put(`/api/movie/${updateId}`, action.payload);
+        yield put ({
+            type: 'SAGA_FETCH_DETAILS',
+            payload: updateId
+        })
     } catch (error) {
         console.log(error)
         yield put ({
-            type: 'PUT_MOVIES_ERROR'
+            type: 'PUT_MOVIE_ERROR'
         })
     }
 }
