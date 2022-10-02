@@ -2,13 +2,14 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import './EditMovieDetails.css';
 import EditMovieDetailsItem from "./EditMovieDetailsItem";
 
 export default function EditMovieDetails() {
 
     const dispatch = useDispatch();
     const params = useParams();
-    const movie = useSelector(store => store.details);
+    let movie = useSelector(store => store.details);
 
     useEffect(() => {
         console.log('Edit params:', params);
@@ -17,6 +18,8 @@ export default function EditMovieDetails() {
             type: 'SAGA_FETCH_DETAILS',
             payload: params.id
         });
+        
+        dispatch({type: 'SAGA_FETCH_GENRES'});
 
         // Clear the details store upon leaving the page
         return () => {

@@ -22,7 +22,8 @@ router.get('/:id', (req, res) => {
   const getId = req.params.id;
   const sqlText = `SELECT
                       movies.id, movies.title, movies.poster, movies.description, 
-                      ARRAY_AGG (genres.name) genres
+                      ARRAY_AGG (genres.name) genres,
+                      ARRAY_AGG (genres.id) genre_ids
                    FROM "movies"
                       JOIN "movies_genres"
                         ON movies.id = movies_genres.movie_id
