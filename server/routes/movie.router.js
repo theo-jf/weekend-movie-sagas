@@ -21,7 +21,7 @@ router.get('/:id', (req, res) => {
 
   const getId = req.params.id;
   const sqlText = `SELECT
-                      movies.title, movies.poster, movies.description, 
+                      movies.id, movies.title, movies.poster, movies.description, 
                       ARRAY_AGG (genres.name) genres
                    FROM "movies"
                       JOIN "movies_genres"
@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
                       JOIN "genres"
                         ON movies_genres.genre_id = genres.id
                       WHERE movies.id = $1
-                      GROUP BY movies.title, movies.poster, movies.description;`
+                      GROUP BY movies.id, movies.title, movies.poster, movies.description;`
   
   pool.query(sqlText, [getId])
     .then(result => {

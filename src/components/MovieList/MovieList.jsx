@@ -17,7 +17,7 @@ function MovieList() {
     }, []);
 
     const seeDetails = (id) => {
-        dispatch({type: 'SAGA_FETCH_DETAILS', payload: id});
+        // dispatch({type: 'SAGA_FETCH_DETAILS', payload: id});
         //Insert id for MovieDetails to use as parameter
         history.push(`/details/${id}`);
     }

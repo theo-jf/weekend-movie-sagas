@@ -27,12 +27,18 @@ export default function MovieDetails() {
 
     }, [params.id]);
 
+    const toEditDetails = (id) => {
+        console.log('movie id???', movie)
+        history.push(`/details/edit/${id}`);
+    }
+
     const backToList = () => {
         history.push('/');
     }
 
     return (
         <>
+            <button onClick={() => toEditDetails(movie.id)}>Edit movie entry</button>
             <MovieDetailsItem key={movie.id} movie={movie} />
             <footer className="movieFooter">
                 <button id="backToList" onClick={backToList}>Back to List</button>
