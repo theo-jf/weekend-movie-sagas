@@ -24,6 +24,7 @@ export default function MovieForm() {
                                                     genre_names: []
                                                 });
 
+    // State storage for added genres                                            
     const [newMovieObjectGenreIds, setNewMovieObjectGenreIds] = useState([]);
     const [newMovieObjectGenreNames, setNewMovieObjectGenreNames] = useState([]);
 
@@ -42,11 +43,18 @@ export default function MovieForm() {
     }
 
     const addGenre = (e) => {
+        // Prevent against adding the same genre twice
         if (!newMovieObjectGenreNames.includes(e.target.value.name)) {
             setNewMovieObjectGenreIds(prevState => [...prevState, e.target.value.id]);
             setNewMovieObjectGenreNames(prevState => [...prevState, e.target.value.name]);
             console.log(newMovieObjectGenreNames);
         }
+    }
+
+    const removeGenre = (id, name) => {
+        setNewMovieObjectGenreIds(newMovieObjectGenreIds.filter(stateId => stateId != id))
+        setNewMovieObjectGenreNames(newMovieObjectGenreNames.filter(stateName => stateName != name));
+        console.log(newMovieObjectGenreNames);
     }
 
     return (
@@ -90,7 +98,9 @@ export default function MovieForm() {
                 {/* Display for added genres (if any) */}
                 {newMovieObjectGenreNames.map((name, i) => {
                     return (
-                        <p key={i}>{name}</p>
+                        <p key={i}>{name}
+                            <button onClick={() => removeGenre(newMovieObjectGenreIds[i], name)}>Delete</button>
+                        </p>
                     );
                 })}
                 {/* Drop-down to add another genre */}
