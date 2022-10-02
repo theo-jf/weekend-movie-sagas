@@ -54,7 +54,10 @@ export default function MovieForm() {
         if (newMovieObject.title != '' && newMovieObject.poster != '' &&
             newMovieObject.description != '' && newMovieObject.genre_ids[0] != undefined) {
                 // Dispatch newMovieObject
-
+                dispatch({
+                    type: 'SAGA_ADD_MOVIE',
+                    payload: newMovieObject
+                })
                 console.log('New movie', newMovieObject);
                 backToList();
         }
