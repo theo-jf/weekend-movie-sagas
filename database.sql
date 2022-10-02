@@ -20,7 +20,7 @@ CREATE TABLE "genres" (
 -- This is many-to-many!
 CREATE TABLE "movies_genres" (
   "id" SERIAL PRIMARY KEY,
-  "movie_id" INT REFERENCES "movies" NOT NULL,
+  "movie_id" INT REFERENCES "movies" ON DELETE CASCADE NOT NULL,
   "genre_id" INT REFERENCES "genres" NOT NULL
 );
 

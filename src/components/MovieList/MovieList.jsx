@@ -10,14 +10,14 @@ function MovieList() {
     const dispatch = useDispatch();
     const history = useHistory();
     const movies = useSelector(store => store.movies);
-    const snackbar = useSelector(store => store.snackbar)
+    const snackbar = useSelector(store => store.snackbar);
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
     const seeDetails = (id) => {
-        dispatch({type: 'SAGA_FETCH_DETAILS', payload: id});
+        // dispatch({type: 'SAGA_FETCH_DETAILS', payload: id});
         //Insert id for MovieDetails to use as parameter
         history.push(`/details/${id}`);
     }
@@ -52,14 +52,19 @@ function MovieList() {
                     })}
                 </section>
             </main>
-            <Snackbar open={snackbar.error} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={snackbar.postError} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                     Error uploading movie
                 </Alert>
             </Snackbar>
-            <Snackbar open={snackbar.success} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={snackbar.postSuccess} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Movie added
+                </Alert>
+            </Snackbar>
+            <Snackbar open={snackbar.getError} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                    Error fetching movies
                 </Alert>
             </Snackbar>
             <footer className="movieFooter">

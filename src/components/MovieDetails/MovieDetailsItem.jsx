@@ -1,6 +1,7 @@
 export default function MovieDetailsItem({movie}) {
+
     return (
-        <>
+        <>  
             <h3>{movie.title}</h3>
             <img className="detailsPoster" 
                 src={movie.poster} 

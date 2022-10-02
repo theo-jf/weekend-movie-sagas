@@ -17,6 +17,7 @@ function* rootSaga() {
     yield takeEvery('SAGA_FETCH_DETAILS', fetchDetails);
     yield takeEvery('SAGA_FETCH_GENRES', fetchAllGenres);
     yield takeEvery('SAGA_POST_MOVIE', postNewMovie);
+    yield takeEvery('SAGA_PUT_MOVIE', updateMovie);
 }
 
 function* fetchAllMovies() {
@@ -26,8 +27,11 @@ function* fetchAllMovies() {
         console.log('get all:', movies.data);
         yield put({ type: 'SET_MOVIES', payload: movies.data });
 
-    } catch {
-        console.log('get all error');
+    } catch (error) {
+        console.log(error);
+        yield put ({
+            type: 'GET_MOVIES_ERROR'
+        })
     }
         
 }
@@ -73,7 +77,23 @@ function* postNewMovie(action) {
     } catch (error) {
         console.log(error);
         yield put ({
-            type: 'POST_MOVIE_ERROR'
+            type: 'POST_MOVIES_ERROR'
+        })
+    }
+}
+
+function* updateMovie(action) {
+    const updateId = action.payload.id;
+    try {
+        yield axios.put(`/api/movie/${updateId}`, action.payload);
+        yield put ({
+            type: 'SAGA_FETCH_DETAILS',
+            payload: updateId
+        })
+    } catch (error) {
+        console.log(error)
+        yield put ({
+            type: 'PUT_MOVIE_ERROR'
         })
     }
 }
@@ -113,14 +133,18 @@ const details = (state = {}, action) => {
 }
 
 // Boolean for snackbar appearance
-const snackbar = (state = {success: false, error: false}, action) => {
+const snackbar = (state = {postSuccess: false, postError: false, getError: false, putError: false}, action) => {
     switch (action.type) {
         case 'POST_MOVIE_SUCCESS':
             return {...state, success: true};
         case 'POST_MOVIE_ERROR':
             return {... state, error: true};
+        case 'GET_MOVIES_ERROR':
+            return {... state, getError: true};
+        case 'PUT_MOVIE_ERROR':
+            return {...state, putError: true};
         case 'RESET_SNACKBAR':
-            return {success: false, error: false};
+            return {success: false, error: false, getError: false, putError: false};
     }  
     return state;
 }
