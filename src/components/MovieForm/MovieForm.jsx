@@ -20,12 +20,12 @@ export default function MovieForm() {
                                                     title: '',
                                                     poster: '',
                                                     description: '',
-                                                    genre_ids: [],
-                                                    genre_names: []
+                                                    genre_ids: []
                                                 });
 
-    // State storage for added genres                                            
-    const [newMovieObjectGenreIds, setNewMovieObjectGenreIds] = useState([]);
+    // State storage for added genres display
+    // Keep track of Ids for removeGenreFunction
+    const [newMovieObjectGenreIds, setNewMovieObjectGenreIds] = useState([]);                                          
     const [newMovieObjectGenreNames, setNewMovieObjectGenreNames] = useState([]);
 
 
@@ -38,21 +38,23 @@ export default function MovieForm() {
     }
 
     const addNewMovie = () => {
-        console.log(newMovieObject);
+        console.log('New movie', newMovieObject);
         backToList();
     }
 
     const addGenre = (e) => {
         // Prevent against adding the same genre twice
         if (!newMovieObjectGenreNames.includes(e.target.value.name)) {
-            setNewMovieObjectGenreIds(prevState => [...prevState, e.target.value.id]);
             setNewMovieObjectGenreNames(prevState => [...prevState, e.target.value.name]);
-            console.log(newMovieObjectGenreNames);
+            setNewMovieObjectGenreIds(prevState => [...prevState, e.target.value.id]);
+            setNewMovieObject(prevState => ({...prevState, genre_ids: ([...prevState.genre_ids,  e.target.value.id])}));
         }
     }
 
     const removeGenre = (id, name) => {
-        setNewMovieObjectGenreIds(newMovieObjectGenreIds.filter(stateId => stateId != id))
+        // Remove Id from newMovieObject, remove genre name and Id from state
+        setNewMovieObject(prevState => ({...prevState, genre_ids: prevState.genre_ids.filter(stateId => stateId != id)}));
+        setNewMovieObjectGenreIds(newMovieObjectGenreIds.filter(stateId => stateId != id));
         setNewMovieObjectGenreNames(newMovieObjectGenreNames.filter(stateName => stateName != name));
         console.log(newMovieObjectGenreNames);
     }
