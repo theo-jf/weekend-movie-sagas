@@ -2,7 +2,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { TextField, Box, MenuItem, Select, InputLabel } from "@mui/material";
+import { TextField, Box, MenuItem, Select, InputLabel, FormControl, FormHelperText } from "@mui/material";
 
 export default function MovieForm() {
 
@@ -13,8 +13,8 @@ export default function MovieForm() {
 
     const [badTitleSubmit, setBadTitleSubmit] = useState(false);
     const [badPosterSubmit, setBadPosterSubmit] = useState(false); 
-    const [badGenreSubmit, setBadGenreSubmit] = useState(false);
     const [badDescSubmit, setBadDescSubmit] = useState(false);
+    const [badGenreSubmit, setBadGenreSubmit] = useState(false);
 
     const [newMovieObject, setNewMovieObject] = useState({
                                                     title: '',
@@ -38,8 +38,39 @@ export default function MovieForm() {
     }
 
     const addNewMovie = () => {
-        console.log('New movie', newMovieObject);
-        backToList();
+        // Reset errors on inputs if entries added
+        if (newMovieObject.title != '') {
+            setBadTitleSubmit(false);
+        }
+        if (newMovieObject.poster != '') {
+            setBadPosterSubmit(false);
+        }
+        if (newMovieObject.description != '') {
+            setBadDescSubmit(false)
+        }
+        if (newMovieObject.genre_ids[0] != undefined) {
+            setBadGenreSubmit(false);
+        }
+        if (newMovieObject.title != '' && newMovieObject.poster != '' &&
+            newMovieObject.description != '' && newMovieObject.genre_ids[0] != undefined) {
+                // Dispatch newMovieObject
+
+                console.log('New movie', newMovieObject);
+                backToList();
+        }
+        // Add errors if any object keys are empty
+        if (newMovieObject.title === '') {
+            setBadTitleSubmit(true);
+        }
+        if (newMovieObject.poster === '') {
+            setBadPosterSubmit(true);
+        }
+        if (newMovieObject.description === '') {
+            setBadDescSubmit(true);
+        }
+        if (newMovieObject.genre_ids[0] === undefined) {
+            setBadGenreSubmit(true);
+        }
     }
 
     const addGenre = (e) => {
@@ -51,7 +82,8 @@ export default function MovieForm() {
         }
     }
 
-    const removeGenre = (id, name) => {
+    const removeGenre = (id, name, e) => {
+        e.preventDefault();
         // Remove Id from newMovieObject, remove genre name and Id from state
         setNewMovieObject(prevState => ({...prevState, genre_ids: prevState.genre_ids.filter(stateId => stateId != id)}));
         setNewMovieObjectGenreIds(newMovieObjectGenreIds.filter(stateId => stateId != id));
@@ -101,22 +133,29 @@ export default function MovieForm() {
                 {newMovieObjectGenreNames.map((name, i) => {
                     return (
                         <p key={i}>{name}
-                            <button onClick={() => removeGenre(newMovieObjectGenreIds[i], name)}>Delete</button>
+                            <button onClick={(e) => removeGenre(newMovieObjectGenreIds[i], name, e)}>Delete</button>
                         </p>
                     );
                 })}
                 {/* Drop-down to add another genre */}
-                <InputLabel>Add genres</InputLabel>
-                <Select
-                value={''}
-                onChange={addGenre}
-                >
-                    {genres?.map(genre => {
-                        return (
-                            <MenuItem key={genre?.id} value={{id: genre?.id, name: genre?.name}}>{genre?.name}</MenuItem>
-                        );
-                    })}
-                </Select>
+                <InputLabel error={(badGenreSubmit === true) ? true : false}>Add genres</InputLabel>
+                <FormControl 
+                    sx={{minWidth: 200}}
+                    required={(badGenreSubmit === true) ? true : false}
+                    error={(badGenreSubmit === true) ? true : false}>
+                    <Select
+                    value={''}
+                    onChange={addGenre}
+                    fullWidth
+                    >
+                        {genres?.map(genre => {
+                            return (
+                                <MenuItem key={genre?.id} value={{id: genre?.id, name: genre?.name}}>{genre?.name}</MenuItem>
+                            );
+                        })}
+                    </Select>
+                    <FormHelperText>{(badGenreSubmit === true) ? "Please add at least one genre" : ""}</FormHelperText>
+                </FormControl>
             </div>
                 {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
