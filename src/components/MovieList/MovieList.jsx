@@ -10,7 +10,7 @@ function MovieList() {
     const dispatch = useDispatch();
     const history = useHistory();
     const movies = useSelector(store => store.movies);
-    const snackbar = useSelector(store => store.snackbar)
+    const snackbar = useSelector(store => store.snackbar);
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });

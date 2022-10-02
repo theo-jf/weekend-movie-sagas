@@ -6,6 +6,7 @@ import { TextField, Box, MenuItem, Select, InputLabel, FormControl, FormHelperTe
 
 export default function EditMovieDetailsItem({movie}) {
 
+    const dispatch = useDispatch();
     const history = useHistory();
 
     const genres = useSelector(store => store.genres);
@@ -54,7 +55,42 @@ export default function EditMovieDetailsItem({movie}) {
 
     const addMovieEdits = () => {
         console.log('edits!:', newMovieObject);
-        history.push(`/details/${movie.id}`);
+        // Reset errors on inputs if entries added
+        if (newMovieObject.title != '') {
+            setBadTitleSubmit(false);
+        }
+        if (newMovieObject.poster != '') {
+            setBadPosterSubmit(false);
+        }
+        if (newMovieObject.description != '') {
+            setBadDescSubmit(false)
+        }
+        if (newMovieObject.genre_ids[0] != undefined) {
+            setBadGenreSubmit(false);
+        }
+        if (newMovieObject.title != '' && newMovieObject.poster != '' &&
+            newMovieObject.description != '' && newMovieObject.genre_ids[0] != undefined) {
+                // Dispatch newMovieObject
+                dispatch({
+                    type: 'SAGA_PUT_MOVIE',
+                    payload: newMovieObject
+                })
+                console.log('New movie', newMovieObject);
+                backToDetails();
+        }
+        // Add errors if any object keys are empty
+        if (newMovieObject.title === '') {
+            setBadTitleSubmit(true);
+        }
+        if (newMovieObject.poster === '') {
+            setBadPosterSubmit(true);
+        }
+        if (newMovieObject.description === '') {
+            setBadDescSubmit(true);
+        }
+        if (newMovieObject.genre_ids[0] === undefined) {
+            setBadGenreSubmit(true);
+        }
     }
 
 

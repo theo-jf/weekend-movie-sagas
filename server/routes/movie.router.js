@@ -82,4 +82,51 @@ router.post('/', (req, res) => {
   })
 })
 
+// PUT route for updating a movie
+router.put('/:id', (req, res) => {
+  
+  const updateId = req.params.id;
+  const sqlTextMovies = `UPDATE "movies"
+                      SET 
+                        movies.title = $1, 
+                        movies.poster = $2, 
+                        movies.description = $3
+                      WHERE movies.id = $1;`
+                    
+  pool.query(sqlTextMovies, [req.body.title, req.body.poster, req.body.description, updateId])
+    .then(result => {
+      // On successful update, delete old genres from join table
+      const sqlTextJoinTableDelete = `DELETE FROM "movies_genres"
+                                  WHERE movie_id = $1`
+      pool.query(sqlTextJoinTableDelete, [updateId])
+        .then(result => {
+          // Then, add new genres
+          for ( let genre_id of req.body.genre_ids) {
+            const sqlTextJoinTableInsert = `INSERT INTO "movies_genres"
+                                          ("movie_id", "genre_id")
+                                          VALUES
+                                          ($1, $2);`
+
+            pool.query(sqlTextJoinTableInsert, [updateId, genre_id]).then(result => {
+              // No status inside loop 
+            }).catch(err => {
+            // catch for insert query
+            console.log(err);
+            return res.sendStatus(500)
+          })
+          }
+          // Return for all queries successful
+          return res.sendStatus(200);
+        }).catch(err => {
+          // catch for delete query
+          console.log(err);
+          return res.sendStatus(500)
+        })
+  // Catch for first query
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500)
+  })
+})
+
 module.exports = router;
