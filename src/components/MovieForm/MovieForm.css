@@ -1,5 +1,8 @@
 .form {
+    margin-bottom: 100px;
+}
+
+.formDiv {
     margin-right: 60px;
     margin-left: 25px;
-    margin-bottom: 100px;
 }

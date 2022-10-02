@@ -106,7 +106,7 @@ export default function MovieForm() {
                 '& .MuiTextField-root': { m: 2 },
              }}
              noValidate>
-            <div>
+            <div className="formDiv">
                 <TextField 
                     onChange={(e) => setNewMovieObject(prevState => ({...prevState, title: e.target.value}))}
                     error={(badTitleSubmit === true) ? true : false}
@@ -135,6 +135,7 @@ export default function MovieForm() {
                     multiline
                     rows={9}
                     helperText={(badDescSubmit === true) ? "required" : ""}/>
+                </div>
                 {/* Display for added genres (if any) */}
                 {newMovieObjectGenreNames.map((name, i) => {
                     return (
@@ -162,7 +163,6 @@ export default function MovieForm() {
                     </Select>
                     <FormHelperText>{(badGenreSubmit === true) ? "Please add at least one genre" : ""}</FormHelperText>
                 </FormControl>
-            </div>
             </Box>
             <footer className="movieFooter">
                 <button id="cancelFormBtn" onClick={backToList}>Cancel</button>
