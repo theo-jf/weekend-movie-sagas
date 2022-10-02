@@ -2,6 +2,8 @@ import { useParams, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import './MovieForm.css'
+
 import { TextField, Box, MenuItem, Select, InputLabel, FormControl, FormHelperText } from "@mui/material";
 
 export default function MovieForm() {
