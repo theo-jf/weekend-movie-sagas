@@ -55,7 +55,7 @@ export default function MovieForm() {
             newMovieObject.description != '' && newMovieObject.genre_ids[0] != undefined) {
                 // Dispatch newMovieObject
                 dispatch({
-                    type: 'SAGA_ADD_MOVIE',
+                    type: 'SAGA_POST_MOVIE',
                     payload: newMovieObject
                 })
                 console.log('New movie', newMovieObject);

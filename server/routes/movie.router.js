@@ -65,15 +65,15 @@ router.post('/', (req, res) => {
         `
         // SECOND QUERY ADDS GENRE FOR THAT NEW MOVIE
         pool.query(insertMovieGenreQuery, [createdMovieId, genre_id]).then(result => {
-          //Now that both are done, send back success!
-          res.sendStatus(201);
+          // Don't set the successful response header inside the loop!
         }).catch(err => {
           // catch for second query
           console.log(err);
-          res.sendStatus(500)
+          return res.sendStatus(500)
         })
     }
-
+    // After the loop has completed successfully, send response
+    return res.sendStatus(201);
 // Catch for first query
   }).catch(err => {
     console.log(err);
