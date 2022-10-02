@@ -101,7 +101,7 @@ export default function MovieForm() {
              className="form" 
              autoComplete="off"
              sx={{
-                '& .MuiTextField-root': { m: 1 },
+                '& .MuiTextField-root': { m: 2 },
              }}
              noValidate>
             <div>
@@ -129,8 +129,9 @@ export default function MovieForm() {
                     required={(badDescSubmit === true) ? true : false}
                     value={newMovieObject.description}
                     placeholder="description"
-                    variant="standard"
                     fullWidth
+                    multiline
+                    rows={9}
                     helperText={(badDescSubmit === true) ? "required" : ""}/>
                 {/* Display for added genres (if any) */}
                 {newMovieObjectGenreNames.map((name, i) => {
@@ -160,11 +161,6 @@ export default function MovieForm() {
                     <FormHelperText>{(badGenreSubmit === true) ? "Please add at least one genre" : ""}</FormHelperText>
                 </FormControl>
             </div>
-                {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                        Error uploading item
-                    </Alert>
-                </Snackbar> */}
             </Box>
             <footer className="movieFooter">
                 <button id="cancelFormBtn" onClick={backToList}>Cancel</button>

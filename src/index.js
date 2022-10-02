@@ -67,9 +67,14 @@ function* postNewMovie(action) {
         yield put({
             type: 'FETCH_MOVIES'
         })
+        yield put ({
+            type: 'POST_MOVIE_SUCCESS'
+        })
     } catch (error) {
         console.log(error);
-        alert('Error adding new movie');
+        yield put ({
+            type: 'POST_MOVIE_ERROR'
+        })
     }
 }
 
@@ -107,12 +112,26 @@ const details = (state = {}, action) => {
     return state;
 }
 
+// Boolean for snackbar appearance
+const snackbar = (state = {success: false, error: false}, action) => {
+    switch (action.type) {
+        case 'POST_MOVIE_SUCCESS':
+            return {...state, success: true};
+        case 'POST_MOVIE_ERROR':
+            return {... state, error: true};
+        case 'RESET_SNACKBAR':
+            return {success: false, error: false};
+    }  
+    return state;
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
-        details
+        details,
+        snackbar
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
