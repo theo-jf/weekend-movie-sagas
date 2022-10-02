@@ -52,14 +52,19 @@ function MovieList() {
                     })}
                 </section>
             </main>
-            <Snackbar open={snackbar.error} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={snackbar.postError} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                     Error uploading movie
                 </Alert>
             </Snackbar>
-            <Snackbar open={snackbar.success} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={snackbar.postSuccess} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Movie added
+                </Alert>
+            </Snackbar>
+            <Snackbar open={snackbar.getError} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                    Error fetching movies
                 </Alert>
             </Snackbar>
             <footer className="movieFooter">

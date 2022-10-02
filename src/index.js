@@ -26,8 +26,11 @@ function* fetchAllMovies() {
         console.log('get all:', movies.data);
         yield put({ type: 'SET_MOVIES', payload: movies.data });
 
-    } catch {
-        console.log('get all error');
+    } catch (error) {
+        console.log(error);
+        yield put ({
+            type: 'GET_MOVIES_ERROR'
+        })
     }
         
 }
@@ -73,7 +76,7 @@ function* postNewMovie(action) {
     } catch (error) {
         console.log(error);
         yield put ({
-            type: 'POST_MOVIE_ERROR'
+            type: 'POST_MOVIES_ERROR'
         })
     }
 }
@@ -113,14 +116,16 @@ const details = (state = {}, action) => {
 }
 
 // Boolean for snackbar appearance
-const snackbar = (state = {success: false, error: false}, action) => {
+const snackbar = (state = {postSuccess: false, postError: false, getError: false}, action) => {
     switch (action.type) {
         case 'POST_MOVIE_SUCCESS':
             return {...state, success: true};
         case 'POST_MOVIE_ERROR':
             return {... state, error: true};
+        case 'GET_MOVIES_ERROR':
+            return {... state, getError: true};
         case 'RESET_SNACKBAR':
-            return {success: false, error: false};
+            return {success: false, error: false, getError: false};
     }  
     return state;
 }
