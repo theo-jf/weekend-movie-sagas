@@ -136,9 +136,9 @@ const details = (state = {}, action) => {
 const snackbar = (state = {postSuccess: false, postError: false, getError: false, putError: false}, action) => {
     switch (action.type) {
         case 'POST_MOVIE_SUCCESS':
-            return {...state, success: true};
+            return {...state, postSuccess: true};
         case 'POST_MOVIE_ERROR':
-            return {... state, error: true};
+            return {... state, postError: true};
         case 'GET_MOVIES_ERROR':
             return {... state, getError: true};
         case 'PUT_MOVIE_ERROR':

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './MovieList.css'
 
-import { Snackbar, Alert, Grid, Card, CardContent } from "@mui/material";
+import { Snackbar, Alert, Grid, CardContent, Button } from "@mui/material";
 
 function MovieList() {
 
@@ -36,7 +36,6 @@ function MovieList() {
     return (
         <>
             <main className="movieListMain">
-                <h1>MovieList</h1>
                 <Grid container spacing={1} className="moviesDisplay">
                     {movies.map(movie => {
                         return (
@@ -70,7 +69,7 @@ function MovieList() {
                 </Alert>
             </Snackbar>
             <footer className="movieFooter">
-                <button onClick={toMovieForm}>Add a Movie</button>
+                <Button onClick={toMovieForm}>Add a Movie</Button>
             </footer>
         </>
     );

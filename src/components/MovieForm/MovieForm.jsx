@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import './MovieForm.css'
 
-import { TextField, Box, MenuItem, Select, InputLabel, FormControl, FormHelperText } from "@mui/material";
+import { TextField, Box, MenuItem, Select, InputLabel, FormControl, FormHelperText, Button } from "@mui/material";
 
 export default function MovieForm() {
 
@@ -140,7 +140,7 @@ export default function MovieForm() {
                 {newMovieObjectGenreNames.map((name, i) => {
                     return (
                         <p key={i}>{name}
-                            <button onClick={(e) => removeGenre(newMovieObjectGenreIds[i], name, e)}>Delete</button>
+                            <Button color="secondary" onClick={(e) => removeGenre(newMovieObjectGenreIds[i], name, e)}>Delete</Button>
                         </p>
                     );
                 })}
@@ -165,8 +165,8 @@ export default function MovieForm() {
                 </FormControl>
             </Box>
             <footer className="movieFooter">
-                <button id="cancelFormBtn" onClick={backToList}>Cancel</button>
-                <button id="saveFormBtn" onClick={addNewMovie}>Save</button>
+                <Button id="cancelFormBtn" onClick={backToList}>Cancel</Button>
+                <Button id="saveFormBtn" onClick={addNewMovie}>Save</Button>
             </footer>
         </>
     );

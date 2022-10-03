@@ -2,7 +2,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Snackbar, Alert } from "@mui/material";
+import { Snackbar, Alert, Button } from "@mui/material";
 
 import MovieDetailsItem from "./MovieDetailsItem";
 
@@ -54,8 +54,8 @@ export default function MovieDetails() {
                 </Alert>
             </Snackbar>
             <footer className="movieFooter">
-                <button id="backToList" onClick={backToList}>Back to List</button>
-                <button onClick={() => toEditDetails(movie.id)}>Edit entry</button>
+                <Button id="backToList" onClick={backToList}>Back to List</Button>
+                <Button onClick={() => toEditDetails(movie.id)}>Edit entry</Button>
             </footer>
         </>
     );
