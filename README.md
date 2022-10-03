@@ -17,7 +17,7 @@ Images of all pages can be viewed below, and full assignment details can be foun
 
 ![Wireframe](./wireframes/MovieSagas_Details_Page.png)
 
-    Add you own!
+    Add your own!
 
 ![Wireframe](./wireframes/MovieSagas_Form_Page.png)
 
