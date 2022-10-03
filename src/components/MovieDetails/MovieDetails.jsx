@@ -41,6 +41,17 @@ export default function MovieDetails() {
         history.push(`/details/edit/${id}`);
     }
 
+    const deleteMovie = (id) => {
+        // Confirm delete
+        if (confirm('Delete movie?')) {
+            dispatch({
+                type: 'SAGA_DELETE_MOVIE',
+                payload: id
+            })
+            backToList();
+        }
+    }
+
     const backToList = () => {
         history.push('/');
     }
@@ -56,6 +67,7 @@ export default function MovieDetails() {
             <footer className="movieFooter">
                 <Button id="backToList" onClick={backToList}>Back to List</Button>
                 <Button onClick={() => toEditDetails(movie.id)}>Edit entry</Button>
+                <Button onClick={() => deleteMovie(movie.id)}>Delete entry</Button>
             </footer>
         </>
     );

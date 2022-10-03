@@ -68,6 +68,16 @@ function MovieList() {
                     Error fetching movies
                 </Alert>
             </Snackbar>
+            <Snackbar open={snackbar.delError} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                    Error deleting movie
+                </Alert>
+            </Snackbar>
+            <Snackbar open={snackbar.delSuccess} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Movie deleted
+                </Alert>
+            </Snackbar>
             <footer className="movieFooter">
                 <Button onClick={toMovieForm}>Add a Movie</Button>
             </footer>

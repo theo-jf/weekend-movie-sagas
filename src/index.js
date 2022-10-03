@@ -18,6 +18,7 @@ function* rootSaga() {
     yield takeEvery('SAGA_FETCH_GENRES', fetchAllGenres);
     yield takeEvery('SAGA_POST_MOVIE', postNewMovie);
     yield takeEvery('SAGA_PUT_MOVIE', updateMovie);
+    yield takeEvery('SAGA_DELETE_MOVIE', deleteMovie);
 }
 
 function* fetchAllMovies() {
@@ -98,6 +99,21 @@ function* updateMovie(action) {
     }
 }
 
+function* deleteMovie(action) {
+    const deleteId = action.payload;
+    try {
+        yield axios.delete(`/api/movie/${deleteId}`);
+        yield put ({
+            type: 'DELETE_MOVIE_SUCCESS'
+        })
+    } catch (error) {
+        console.log(error);
+        yield put ({
+            type: 'DELETE_MOVIE_ERROR'
+        })
+    }
+}
+
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -133,7 +149,7 @@ const details = (state = {}, action) => {
 }
 
 // Boolean for snackbar appearance
-const snackbar = (state = {postSuccess: false, postError: false, getError: false, putError: false}, action) => {
+const snackbar = (state = {postSuccess: false, postError: false, getError: false, putError: false, delError: false, delSuccess: false}, action) => {
     switch (action.type) {
         case 'POST_MOVIE_SUCCESS':
             return {...state, postSuccess: true};
@@ -143,8 +159,12 @@ const snackbar = (state = {postSuccess: false, postError: false, getError: false
             return {... state, getError: true};
         case 'PUT_MOVIE_ERROR':
             return {...state, putError: true};
+        case 'DELETE_MOVIE_ERROR':
+            return {...state, delError: true};
+        case 'DELETE_MOVIE_SUCCESS':
+            return {...state, delSuccess: true};
         case 'RESET_SNACKBAR':
-            return {success: false, error: false, getError: false, putError: false};
+            return {success: false, error: false, getError: false, putError: false, delError: false, delSuccess: false};
     }  
     return state;
 }
