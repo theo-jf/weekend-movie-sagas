@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { TextField, Box, MenuItem, Select, InputLabel, FormControl, FormHelperText } from "@mui/material";
+import { TextField, Button, MenuItem, Select, InputLabel, FormControl, FormHelperText } from "@mui/material";
 
 export default function EditMovieDetailsItem({movie}) {
 
@@ -142,7 +142,7 @@ export default function EditMovieDetailsItem({movie}) {
                 {newMovieObjectGenreNames?.map((name, i) => {
                         return (
                             <p key={i}>{name}
-                                <button onClick={(e) => removeGenre(newMovieObjectGenreIds[i], name, e)}>Delete</button>
+                                <Button color="secondary" onClick={(e) => removeGenre(newMovieObjectGenreIds[i], name, e)}>Delete</Button>
                             </p>
                         );
                 })}
@@ -167,8 +167,8 @@ export default function EditMovieDetailsItem({movie}) {
                 </FormControl>
             </section>
             <footer className="movieFooter">
-                <button id="cancelEditsBtn" onClick={backToDetails}>Cancel</button>
-                <button id="saveEditsBtn" onClick={addMovieEdits}>Save</button>
+                <Button id="cancelEditsBtn" onClick={backToDetails}>Cancel</Button>
+                <Button id="saveEditsBtn" onClick={addMovieEdits}>Save</Button>
             </footer>
         </>
     );

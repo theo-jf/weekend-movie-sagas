@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './MovieList.css'
 
-import { Snackbar, Alert } from "@mui/material";
+import { Snackbar, Alert, Grid, CardContent, Button } from "@mui/material";
 
 function MovieList() {
 
@@ -36,21 +36,22 @@ function MovieList() {
     return (
         <>
             <main className="movieListMain">
-                <h1>MovieList</h1>
-                <section className="movies">
+                <Grid container spacing={1} className="moviesDisplay">
                     {movies.map(movie => {
                         return (
-                            <div key={movie.id} >
-                                <h3>{movie.title}</h3>
-                                <img className="poster" 
-                                    src={movie.poster} 
-                                    alt={movie.title}
-                                    onClick={() => seeDetails(movie.id)}
-                                />
-                            </div>
+                            <Grid item key={movie.id}>
+                                <CardContent className="movieItem">
+                                    <h3>{movie.title}</h3>
+                                    <img className="poster" 
+                                        src={movie.poster} 
+                                        alt={movie.title}
+                                        onClick={() => seeDetails(movie.id)}
+                                    />
+                                </CardContent>
+                            </Grid>
                         );
                     })}
-                </section>
+                </Grid>
             </main>
             <Snackbar open={snackbar.postError} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
@@ -67,8 +68,18 @@ function MovieList() {
                     Error fetching movies
                 </Alert>
             </Snackbar>
+            <Snackbar open={snackbar.delError} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                    Error deleting movie
+                </Alert>
+            </Snackbar>
+            <Snackbar open={snackbar.delSuccess} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Movie deleted
+                </Alert>
+            </Snackbar>
             <footer className="movieFooter">
-                <button onClick={toMovieForm}>Add a Movie</button>
+                <Button onClick={toMovieForm}>Add a Movie</Button>
             </footer>
         </>
     );

@@ -129,4 +129,23 @@ router.put('/:id', (req, res) => {
   })
 })
 
+// DELETE route
+router.delete('/:id', (req, res) => {
+
+  const deleteId = req.params.id;
+  const sqlText = `DELETE FROM "movies"
+                    WHERE "id" = $1;`
+  
+  pool.query(sqlText, [deleteId])
+    .then(response => {
+      res.sendStatus(200);
+    })
+    .catch(error => {
+      console.log('/api/movies DELETE query error', error);
+      res.sendStatus(500);
+    })
+
+}) 
+
+
 module.exports = router;

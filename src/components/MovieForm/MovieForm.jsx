@@ -2,7 +2,9 @@ import { useParams, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { TextField, Box, MenuItem, Select, InputLabel, FormControl, FormHelperText } from "@mui/material";
+import './MovieForm.css'
+
+import { TextField, Box, MenuItem, Select, InputLabel, FormControl, FormHelperText, Button } from "@mui/material";
 
 export default function MovieForm() {
 
@@ -104,7 +106,7 @@ export default function MovieForm() {
                 '& .MuiTextField-root': { m: 2 },
              }}
              noValidate>
-            <div>
+            <div className="formDiv">
                 <TextField 
                     onChange={(e) => setNewMovieObject(prevState => ({...prevState, title: e.target.value}))}
                     error={(badTitleSubmit === true) ? true : false}
@@ -133,11 +135,12 @@ export default function MovieForm() {
                     multiline
                     rows={9}
                     helperText={(badDescSubmit === true) ? "required" : ""}/>
+                </div>
                 {/* Display for added genres (if any) */}
                 {newMovieObjectGenreNames.map((name, i) => {
                     return (
                         <p key={i}>{name}
-                            <button onClick={(e) => removeGenre(newMovieObjectGenreIds[i], name, e)}>Delete</button>
+                            <Button color="secondary" onClick={(e) => removeGenre(newMovieObjectGenreIds[i], name, e)}>Delete</Button>
                         </p>
                     );
                 })}
@@ -160,11 +163,10 @@ export default function MovieForm() {
                     </Select>
                     <FormHelperText>{(badGenreSubmit === true) ? "Please add at least one genre" : ""}</FormHelperText>
                 </FormControl>
-            </div>
             </Box>
             <footer className="movieFooter">
-                <button id="cancelFormBtn" onClick={backToList}>Cancel</button>
-                <button id="saveFormBtn" onClick={addNewMovie}>Save</button>
+                <Button id="cancelFormBtn" onClick={backToList}>Cancel</Button>
+                <Button id="saveFormBtn" onClick={addNewMovie}>Save</Button>
             </footer>
         </>
     );

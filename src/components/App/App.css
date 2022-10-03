@@ -10,6 +10,18 @@
   color: white;
 }
 
+.mainHeader {
+  background-color: #5f9ea0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.headerText {
+  margin: 0;
+  padding: 20px;
+  color: white;
+}
+
 .App-title {
   font-size: 1.5em;
 }
