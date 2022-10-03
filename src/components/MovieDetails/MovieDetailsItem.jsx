@@ -10,9 +10,9 @@ export default function MovieDetailsItem({movie}) {
                 alt={movie.title}
             />
             <Typography variant="body1">
-                <p>––––––––––––––––––––––––––––––––––––––––––––––––––</p>
+                <p>–––––––––––––––––––––––––</p>
                 <p>{movie.description}</p>
-                <p>––––––––––––––––––––––––––––––––––––––––––––––––––</p>
+                <p>–––––––––––––––––––––––––</p>
                 {/* Conditional rendering based on # of genres */}
                 <h3>{(movie?.genres?.length > 1) ? 'Genres' : 'Genre'}</h3>
                 {movie?.genres?.map((genre, i) => {

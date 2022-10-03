@@ -106,6 +106,9 @@ function* deleteMovie(action) {
         yield put ({
             type: 'DELETE_MOVIE_SUCCESS'
         })
+        yield put ({
+            type: 'FETCH_MOVIES'
+        })
     } catch (error) {
         console.log(error);
         yield put ({
